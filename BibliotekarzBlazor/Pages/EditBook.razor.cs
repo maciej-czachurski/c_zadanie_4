@@ -1,4 +1,5 @@
-﻿using BibliotekarzBlazor.Shared.DTOs;
+﻿using BibliotekarzBlazor.Services;
+using BibliotekarzBlazor.Shared.DTOs;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
@@ -16,31 +17,40 @@ public partial class EditBook : ComponentBase
     [Inject] 
     public ISnackbar Snackbar { get; set; }
 
-    public BookDto Book { get; set; }
+    [Inject]
+    public IBookProxyService BookService { get; set; }
 
+    public BookDto Book { get; set; } = new BookDto(); // Initialize to avoid null reference
+
+    private async Task GetData()
+    {
+        Book = await BookService.GetById(Id);
+        if (Book == null)
+        {
+            Snackbar.Add("Nie znaleziono książki.", Severity.Error);
+            Navigation.NavigateTo("/books");
+        }
+    }
     protected override async Task OnInitializedAsync()
     {
-        Book = new()
-        {
-            Id = this.Id,
-            Title = "Harry Potter",
-            Author = "J.K. Rowling",
-            PageCount = 300,
-            IsBorrowed = false,
-            Borrower = new CustomerDto
-            {
-                Id = 2,
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            }
-        };
+
+        await GetData();
     }
 
-    private Task OnSaveClick(MouseEventArgs arg)
+    private async Task OnSaveClick(MouseEventArgs arg)
     {
-        Navigation.NavigateTo("/");
-        Snackbar.Add("Zmiany zostały zapisane.", Severity.Success);
-        return Task.CompletedTask;
+        try
+        {
+            await BookService.Update(Book);
+            Navigation.NavigateTo("/");
+            Snackbar.Add("Zmiany zostały zapisane.", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Navigation.NavigateTo("/");
+            Snackbar.Add("Wystąpił błąd:" + ex.ToString(), Severity.Error);
+        }
+        
     }
 
     private void OnCancelClick(MouseEventArgs obj)
