@@ -1,12 +1,12 @@
 ﻿@page "/"
-
+@inject IDialogService DialogService
 <MudGrid>
     <MudItem sm="6" xs="12">
         <MudTextField @bind-Value="FilterText"
-                      Label="Filtrowanie"
-                      Variant="Variant.Outlined"
-                      Adornment="Adornment.End"
-                      AdornmentIcon="@Icons.Material.Filled.Search" />
+        Label="Filtrowanie"
+        Variant="Variant.Outlined"
+        Adornment="Adornment.End"
+        AdornmentIcon="@Icons.Material.Filled.Search" />
     </MudItem>
 
 
@@ -23,7 +23,7 @@
                     <CellTemplate>
                         <MudStack Row>
                             <MudIconButton Icon="@Icons.Material.Filled.Edit" aria-label="edit" OnClick="() => OnEditClick(context.Item.Id)" />
-                            <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" OnClick="() => OnDeleteClick(context.Item.Id)" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" OnClick="() => OpenDeleteDialog(context.Item.Id) "/>
                         </MudStack>
                     </CellTemplate>
                 </TemplateColumn>
@@ -34,3 +34,31 @@
 
 </MudGrid>
 
+@code {
+
+
+
+
+
+    private async Task OpenDeleteDialog(int ID)
+    {
+        var parameters = new DialogParameters<Dialog>
+        {
+            { x => x.ContentText, "Czy na pewno chcesz usunąć książkę o ID = ." + ID.ToString() },
+            { x => x.ButtonText, "Usuń" },
+            { x => x.Color, Color.Error }
+        };
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = DialogService.Show<Dialog>("Usuń Książke", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await OnDeleteClick(ID);
+        }
+
+    }
+    
+}

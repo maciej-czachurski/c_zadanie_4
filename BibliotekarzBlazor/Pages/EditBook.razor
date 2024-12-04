@@ -6,9 +6,9 @@
     <MudItem xs="12" sm="7">
         <MudPaper Class="pa-4">
             <MudForm Spacing="4">
-                <MudTextField T="string" Label="Tytuł" @bind-Text="Book.Title" />
-                <MudTextField T="string" Label="Autor" @bind-Text="Book.Author" />
-                <MudNumericField T="int" Label="Liczba stron" @bind-Value="Book.PageCount" />
+                <MudTextField T="string" Label="Tytuł" @bind-Text="Book.Title"  Required=true RequiredError="Pole Wymagane"/>
+                <MudTextField T="string" Label="Autor" @bind-Text="Book.Author" Required=true RequiredError="Pole Wymagane" />
+                <MudNumericField T="int" Label="Liczba stron" @bind-Value="Book.PageCount" Required=true RequiredError="Pole Wymagane" />
                 <MudCheckBox T="bool" Label="Czy wypożyczona" @bind-Value="Book.IsBorrowed" />
                 
                 @if (Book.IsBorrowed)
