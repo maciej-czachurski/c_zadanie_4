@@ -2,10 +2,11 @@
     <MudText Typo="Typo.h6" Class="px-4">Bibliotekarz</MudText>
     <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Zarządzanie książkami</MudText>
     <MudDivider Class="my-2"/>
-    <MudNavLink Href="/">Dashboard</MudNavLink>
-    <MudNavGroup Title="Książki" Expanded="true">
+    <MudNavLink Icon="@Icons.Material.Filled.SpaceDashboard" IconColor=Color.Primary Href="/">Dashboard</MudNavLink>
+
+    <MudNavGroup Icon="@Icons.Material.Filled.Book" IconColor=Color.Secondary Title="Książki" Expanded="true">
         <MudNavLink Href="/add-book">Dodaj</MudNavLink>
-        <MudNavLink Href="/edit-book">Edycja</MudNavLink>
+        <MudNavLink Disabled=true Href="/edit-book">Edycja</MudNavLink>
     </MudNavGroup>
-    <MudNavLink Href="/about">About</MudNavLink>
+   
 </MudNavMenu>

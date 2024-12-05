@@ -1,8 +1,13 @@
 ﻿@page "/edit-book/{Id:int}"
 
-<h3>EditBook @Id</h3>
 
-<MudGrid Class="mt-4">
+<MudPaper Class="pa-4">
+      <MudStack Row="true">
+        <MudImage Src="assets/images/Book.png" Height=30 Alt="Add Book image" Elevation="25" Class="rounded-lg" />
+        <h3>Edycja książki: @Book.Title</h3>
+    </MudStack>
+
+<MudGrid Class="pa-4">
     <MudItem xs="12" sm="7">
         <MudPaper Class="pa-4">
             <MudForm Spacing="4">
@@ -27,3 +32,4 @@
         </MudPaper>
     </MudItem>
 </MudGrid>
+</MudPaper>

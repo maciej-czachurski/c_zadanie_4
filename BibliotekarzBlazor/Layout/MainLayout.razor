@@ -9,9 +9,13 @@
 <MudLayout>
     <MudAppBar Elevation="1">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudImage Src="assets/images/Books.png" Height=40 Alt="Logo" Elevation="25" Class="rounded-lg" />
         <MudText Typo="Typo.h5" Class="ml-3">Bibliotekarz</MudText>
         <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+        <MudSwitch @bind-Value="_isDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Tryb Jasny/Ciemny" />
+        <MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
+        <MudChip T="string" Icon="@Icons.Material.Filled.Person" Color="Color.Primary">Maciej Czachurski</MudChip>
+
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu />
@@ -23,6 +27,10 @@
     </MudMainContent>
 </MudLayout>
 @code {
+    private MudThemeProvider _mudThemeProvider;
+
+
+    private bool _isDarkMode;
     bool _drawerOpen = true;
 
     void DrawerToggle()

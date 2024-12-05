@@ -1,9 +1,15 @@
 ﻿@page "/add-book"
-<h3>Dodaj Książke</h3>
+
+
+
 @using System.ComponentModel.DataAnnotations
 
     <MudPaper Class="pa-4">
-        <MudForm Spacing="4">
+    <MudStack Row="true">
+        <MudImage Src="assets/images/AddBook.png" Height=30 Alt="Add Book image" Elevation="25" Class="rounded-lg" />
+        <h3>Dodaj Książke</h3>
+    </MudStack>
+        <MudForm Spacing="8">
             <MudTextField T="string" Label="Tytuł" @bind-Text="Book.Title" Required=true RequiredError="Pole Wymagane" />
             <MudTextField T="string" Label="Autor" @bind-Text="Book.Author" Required=true RequiredError="Pole Wymagane" />
             <MudNumericField T="int" Label="Liczba stron" @bind-Value="Book.PageCount" Required=true RequiredError="Pole Wymagane" />
