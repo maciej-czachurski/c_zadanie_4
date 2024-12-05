@@ -23,7 +23,10 @@ public class BookProxyService : IBookProxyService
         BookDto? book = await httpClient.GetFromJsonAsync<BookDto>($"api/books/{id}");
         return book;
     }
-
+    public async Task Add(BookDto book)
+    {
+        await httpClient.PutAsJsonAsync("api/books", book);
+    }
     public async Task Update(BookDto book)
     {
         await httpClient.PutAsJsonAsync("api/books", book);
@@ -35,4 +38,5 @@ public interface IBookProxyService
     Task<IEnumerable<BookDto>> GetAll();
     Task<BookDto?> GetById(int id);
     Task Update(BookDto book);
+    Task Add(BookDto book);
 }

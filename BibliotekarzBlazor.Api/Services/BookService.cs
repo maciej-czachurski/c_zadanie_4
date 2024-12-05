@@ -50,17 +50,25 @@ public class BookService : IBookService
             {
                 Id = 1,
                 Title = "C# Programming",
+                Author = "Alice Smith",
+                PageCount = 456,
+                IsBorrowed = false,
+                Borrower = new()
+            },
+            new BookDto
+            {
+                Id = 1,
+                Title = "Python for dummies",
                 Author = "John Doe",
                 PageCount = 456,
                 IsBorrowed = false,
                 Borrower = new()
             },
-
             new BookDto
             {
                 Id = 2,
                 Title = "Java Programming",
-                Author = "Jane Doe",
+                Author = "Bruce Lee",
                 PageCount = 654,
                 IsBorrowed = true,
                 Borrower = new()

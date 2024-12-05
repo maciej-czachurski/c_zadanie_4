@@ -1,83 +1,30 @@
 ﻿@page "/add-book"
 <h3>Dodaj Książke</h3>
-<MudPaper>
-    @using System.ComponentModel.DataAnnotations
+@using System.ComponentModel.DataAnnotations
 
-    <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
-        <DataAnnotationsValidator />
-        <MudGrid>
-            <MudItem xs="12" sm="7">
-                <MudCard>
-                    <MudCardContent>
-                        <MudTextField Label="First name" HelperText="Max. 8 characters"
-                                      @bind-Value="model.Username" For="@(() => model.Username)" />
-                        <MudTextField Label="Email" Class="mt-3"
-                                      @bind-Value="model.Email" For="@(() => model.Email)" />
-                        <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
-                                      @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password" />
-                        <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
-                                      @bind-Value="model.Password2" For="@(() => model.Password2)" InputType="InputType.Password" />
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Register</MudButton>
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
-            <MudItem xs="12" sm="5">
-                <MudPaper Class="pa-4 mud-height-full">
-                    <MudText Typo="Typo.subtitle2">Validation Summary</MudText>
-                    @if (success)
-                    {
-                        <MudText Color="Color.Success">Success</MudText>
-                    }
-                    else
-                    {
-                        <MudText Color="@Color.Error">
-                            <ValidationSummary />
-                        </MudText>
-                    }
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="12">
-                <MudText Typo="Typo.body2" Align="Align.Center">
-                    Fill out the form correctly to see the success message.
-                </MudText>
-            </MudItem>
-        </MudGrid>
-    </EditForm>
-    @code {
-        RegisterAccountForm model = new RegisterAccountForm();
-        bool success;
+    <MudPaper Class="pa-4">
+        <MudForm Spacing="4">
+            <MudTextField T="string" Label="Tytuł" @bind-Text="Book.Title" Required=true RequiredError="Pole Wymagane" />
+            <MudTextField T="string" Label="Autor" @bind-Text="Book.Author" Required=true RequiredError="Pole Wymagane" />
+            <MudNumericField T="int" Label="Liczba stron" @bind-Value="Book.PageCount" Required=true RequiredError="Pole Wymagane" />
+            <MudCheckBox T="bool" Label="Czy wypożyczona" @bind-Value="Book.IsBorrowed" />
 
-        public class RegisterAccountForm
-        {
-        [Required]
-        [StringLength(8, ErrorMessage = "Name length can't be more than 8.")]
-        public string Username { get; set; }
+            @if (Book.IsBorrowed)
+            {
+                <MudTextField T="string" Label="Imię wypożyczającego" @bind-Text="Book.Borrower.FirstName" />
+                <MudTextField T="string" Label="Nazwisko wypożyczającego" @bind-Text="Book.Borrower.LastName" />
+            }
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+            <MudPaper Class="d-flex justify-end flex-grow-1 gap-4" Elevation="0" Outlined="false">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                           OnClick="OnAddBook">Dodaj Książke</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Secondary"
+                           OnClick="OnCancelClick">Anuluj</MudButton>
+            </MudPaper>
+        </MudForm>
+    </MudPaper>
 
-        [Required]
-        [StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
-        public string Password { get; set; }
 
-        [Required]
-        [Compare(nameof(Password))]
-        public string Password2 { get; set; }
-
-        }
-
-        private void OnValidSubmit(EditContext context)
-        {
-        success = true;
-        StateHasChanged();
-        }
-
-    }
-
-</MudPaper>
 @code {
 
 }

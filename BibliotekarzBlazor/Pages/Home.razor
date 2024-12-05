@@ -2,16 +2,18 @@
 @inject IDialogService DialogService
 <MudGrid>
     <MudItem sm="6" xs="12">
-        <MudTextField @bind-Value="FilterText"
+        <MudTextField @bind-Value="filterText"
         Label="Filtrowanie"
         Variant="Variant.Outlined"
         Adornment="Adornment.End"
-        AdornmentIcon="@Icons.Material.Filled.Search" />
+        AdornmentIcon="@Icons.Material.Filled.Search"
+        DebounceInterval="100"
+        OnDebounceIntervalElapsed="FilterData" />
     </MudItem>
 
 
     <MudItem>
-        <MudDataGrid Items="@BookList">
+        <MudDataGrid Items="@filteredBooks">
             <Columns>
                 <PropertyColumn Property="x => x.Title" Title="Tytuł" />
                 <PropertyColumn Property="x => x.Author" Title="Autor" />
